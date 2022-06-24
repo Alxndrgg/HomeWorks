@@ -1,0 +1,45 @@
+<html>    
+    <head>
+        <script>        
+            function Fx(x) {
+                   let F = 3 * x - Math.sin(x) - 7;
+                   return F;
+            }
+
+            let E = Number(prompt("Введите E"));
+            let x1 = Number(prompt("Введите x1"));
+            let x2 = Number(prompt("Введите x2"));
+            let x3 = 0;
+            let F1 = Fx(x1);
+            let F2 = Fx(x2);
+            let F3 = 0;
+
+            if (F1 * F2 > 0 || isNaN(x1) || isNaN(x2) || isNaN(E)) {
+                alert("Введите верные значения!");
+            } else {
+                do {
+                    x3 = (x1 + x2) / 2;
+                    F3 = Fx(x3);
+
+                    if (F3 == 0) {
+                        x1 = x3;
+                        x2 = x3;
+                        break;
+                    } else if (F1 * F3 < 0) {
+                        x2 = x3;
+                        F2 = F3;
+                    } else {
+                        x1 = x3;
+                        F1 = F3;
+                    }
+                } while (Math.abs(x1 - x2) >= E)
+            }
+
+            document.write("F(x) = 3x - sin(x) - 7 <br>");
+            document.write("x = " + x3);
+        </script>    
+    </head>
+    <body>
+ 
+    </body>
+</html>
