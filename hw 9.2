@@ -1,0 +1,94 @@
+<html>    
+    <head>
+        <script> 
+            function bfs (graph, start, end) {
+                let queue = [];      
+                let path = {};       
+                queue.push(start);     
+                graph[start].visited = true;   
+
+                while(queue.length > 0) {
+                    let vertexCheck = queue.shift();  
+                    if (vertexCheck == end) {         
+                        break;
+                    }
+                    for (let i of graph[vertexCheck].connect) {
+                        if (!graph[i].visited) {  
+                            path[i] = vertexCheck;     
+                            queue.push(i);           
+                            graph[i].visited = true;  
+                        }
+                    }
+                }
+
+                let goEnd = end;
+                let count = 0;
+                let message;
+                let vertexList = [];  
+
+                while(path[goEnd]) {
+                    vertexList[count] = goEnd;
+                    if (goEnd == start) break;
+                    goEnd = path[goEnd];
+                    count++;
+                }
+                vertexList.push(start);
+
+                for (let i = 0; i < vertexList.length - 1; i++) {
+                    document.write(vertexList[vertexList.length - i - 1] + " ⇒ ");
+                }
+                document.write(end);
+                 
+                if (count > 0) {
+                    document.write("<br> Кратчайший путь = " + count);
+                } else {
+                    document.write("<br> Такого пути не существует! -1 <br>");
+                }
+            }
+
+            let graph = {
+                1 : { 
+                    connect : [2, 6] 
+                },
+                2 : {
+                    connect : [1, 9]
+                },
+                3 : {
+                    connect : [4, 9]
+                },
+                4 : {
+                    connect : [5, 3, 6, 7]
+                },
+                5 : {
+                    connect : [4, 9, 10]
+                },
+                6 : {
+                    connect : [1, 4, 7]
+                },
+                7 : {
+                    connect : [4, 6, 8]
+                },
+                8 : {
+                    connect : [7]
+                },
+                9 : {
+                    connect : [2, 3, 5, 10]
+                },
+                10 : {
+                    connect : [9, 5]
+                },
+                11 : {
+                    connect : []
+                }
+            }
+
+            let start = Number(prompt("Введите начальную точку (от 1 до 11)"));
+            let end = Number(prompt("Введите конечную точку (от 1 до 11)"));
+
+            bfs(graph, start, end);
+        </script>    
+    </head>
+    <body>
+ 
+    </body>
+</html>
