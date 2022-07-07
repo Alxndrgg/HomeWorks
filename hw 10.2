@@ -1,0 +1,82 @@
+<html>    
+    <head>
+        <script charset="UTF-8"> 
+            
+            class BankAccount {
+               constructor(depositor) {
+                  this.number = depositor.number;    //Номер счёта
+                  this.name = depositor.name;        //Вкладчик
+                  this.sum = depositor.sum;          //Баланс
+                  this.percent = depositor.percent;  //Годовая процентная ставка
+                  this.addSum = depositor.addSum;    //Добавленная сумма
+               }
+
+               //Возвращаем значение нового баланса при добавлении суммы
+               get insertCash() {
+                    return this.addMoney();
+               }
+
+               //Возвращаем значение нового баланса при начислении процентов
+               get insertPercent() {
+                    return this.addPercent();
+               }
+               
+               //Функция добавления новой суммы
+               addMoney() { 
+                    depositor.sum = this.sum + this.addSum;
+                    return depositor.sum;
+               }
+
+               //Функция начисления процентов
+               addPercent() {
+                    depositor.sum = this.percent / 100 * this.sum + this.sum; 
+                    return depositor.sum;
+               }
+
+               //Возвращаем массив элементов класса BankAccount
+               get getArray() {
+                    let ArrayDepositor = Object.values(depositor); //Создаём массив элементов класса BankAccount
+                    return ArrayDepositor.slice(0, -1);            //Убираем при выводе последний элемент массива (addSum)
+               }
+            }
+            
+            //Объект вкладчик
+            let depositor = new BankAccount({          
+                number: '40817-810-5-7000-0123456',    //Номер счёта
+                name: 'Иванов Иван Иванович',          //Вкладчик
+                sum: 100000,                           //Баланс (денежная сумма)
+                percent: 8                             //Годовая процентная ставка
+            })
+
+            //Выбор действия пользователя (1 - пополнение баланса, 2 - начисление процентов)
+            let action = prompt("Здравствуйте, " + depositor.name + "! \n\n Ваш счёт №" + depositor.number + "\n Остаток на счёте = " 
+                + depositor.sum + "\n Процентная ставка = " + depositor.percent + "% \n\n Выберите необходимое действие: \n 1 - внести деньги \
+                    \n 2- начислить проценты");
+
+            if (action == 1) { //Добавление баланса
+                let addSum = Number(prompt("Введите сумму, которую хотите добавить"));
+                if (isNaN(addSum)) { //Проверка на корректность данных
+                    alert("Введены некорректные данные!");
+                } else {
+                    depositor.addSum = addSum;                           //Добавляем новый элемент в объект depositor
+                    let resultSum = new BankAccount(depositor);          //Передаём объект depositor в класс BankAccount
+                    console.log("Вкладчик: " + depositor.name);          //Вывод ФИО вкладчика
+                    console.log("Баланс = " + resultSum.insertCash);     //Вывод нового баланса
+                }
+            } else if (action == 2) { //Начисление процентов
+                    let addPercent = new BankAccount(depositor);         //Передаём объект depositor в класс BankAccount
+                    console.log("Вкладчик: " + depositor.name);          //Вывод ФИО вкладчика
+                    console.log("Баланс = " + addPercent.insertPercent); //Вывод нового баланса   
+            } else {
+                alert("Данной операции не существует!");
+            }
+            
+            //Вывод массива элементов класса BankAccount
+            console.log(depositor.getArray); 
+
+        </script>    
+    </head>
+    <body>
+ 
+    </body>
+</html>
