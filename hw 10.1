@@ -1,0 +1,43 @@
+<html>    
+    <head>
+        <script charset="UTF-8"> 
+            
+            class Worker {
+               constructor(name, surname, rate, days) {
+                  this.name = name;         //Имя сотрудника
+                  this.surname = surname;   //Фамилия сотрудника
+                  this.rate = rate;         //Ставка за день
+                  this.days = days;         //Количество отработанных дней
+               }
+
+               //Функция для вывода результата
+               get Salary() {
+                    return this.SumSalary();
+               }
+
+               //Функция рассчёта зарплаты
+               SumSalary() { 
+                    return this.rate * this.days;
+               }
+            }
+
+            let name = prompt("Введите имя сотрудника");                //Имя сотрудника
+            let surname = prompt("Введите фамилию сотрудника");         //Фамилия сотрудника
+            let rate = prompt("Введите ставку за день работы");         //Ставка за день
+            let days = prompt("Введите количество отработанных дней");  //Количество отработанных дней
+            
+            //Проверка на корректность введённых данных
+            if (isFinite(name) || isFinite(surname) || isNaN(rate) || isNaN(days)) {
+                alert("Введите корректные данные!"); 
+            } else { 
+                let result = new Worker(name, surname, rate, days);  //Передаём данные в класс Worker
+                console.log("Сотрудник: " + name + " " + surname);   //Вывод имени и фамилии
+                console.log("Зарплата = " + result.Salary + ".000"); //Вывод рассчитанной зарплаты
+            }
+
+        </script>    
+    </head>
+    <body>
+ 
+    </body>
+</html>
