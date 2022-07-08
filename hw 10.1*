@@ -1,0 +1,58 @@
+<html>    
+    <head>
+        <script charset="UTF-8"> 
+            class User {
+                constructor(studentInfo) {
+                    this.name = studentInfo.name;
+                    this.surname = studentInfo.surname;
+                    this.year = studentInfo.year;
+                    this.date = studentInfo.date;
+                }
+
+                get getFullName() {
+                    return this.fullName();
+                }
+                
+                //Функция получения одновременно Имени и Фамилии студента
+                fullName() {
+                    return this.name + " " + this.surname;
+                }
+            }
+            
+            class Student extends User {
+                get getCourse() {
+                    return this.courseNow();
+                }
+                
+                //Функция для определения на каком курсе обучается студент
+                courseNow() {
+                    return this.date - this.year;
+                }
+            }
+            
+            let studentInfo = {}                                //Объект информация о студенте
+            let name = prompt("Введите Имя студента:");         //Имя студента
+            let surname = prompt("Введите Фамилию студента:");  //Фамилия студента
+            let year = prompt("Введите год поступления:");      //Год поступления
+            let date = new Date().getFullYear() + 1;            //Какой сейчас год
+
+            if (date - year > 5 || date - year < 1) { //Проверка на правильность введённой даты
+                alert("Введите корректные данные!");
+            } else {
+                //Передаём введённые данные в объект
+                studentInfo.name = name;          
+                studentInfo.surname = surname;
+                studentInfo.year = year;
+                studentInfo.date = date;
+
+                let res = new Student(studentInfo);
+                console.log("Имя и Фамилия студента: " + res.getFullName);
+                console.log("Курс обучения: " + res.getCourse);
+            }
+
+        </script>    
+    </head>
+    <body>
+ 
+    </body>
+</html>
