@@ -1,0 +1,31 @@
+<html>    
+    <head>
+        <script charset="UTF-8"> 
+            function hash(str) {
+                let res = 0;
+                for (let i = 0; i < str.length; i++) {
+                    res += str[i].charCodeAt();
+                }
+                res %= 256;
+                return res;
+            } 
+            let str = "qwerty";
+            let res = hash(str);
+            let symbolsList = "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+
+            for (let i = 0; i < symbolsList.length; i++) {
+                let s1 = hash(symbolsList[i]);
+                for (let j = 0; j < symbolsList.length; j++) {
+                    let s2 = hash(symbolsList[j]);       
+                    if (s1 + s2 == res) {
+                        console.log(symbolsList[i] + symbolsList[j]);
+                    }
+                }
+            } 
+
+        </script>    
+    </head>
+    <body>
+ 
+    </body>
+</html>
