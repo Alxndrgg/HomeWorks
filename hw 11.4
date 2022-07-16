@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Вход на сайт</title>
+    </head>
+    <body>
+        <button onclick="signUp()">Зарегистрироваться</button>
+        <button onclick="signIn()">Войти</button>
+        
+        <script> 
+            function hash(pass) {
+                let res = 0;
+                for (let i = 0; i < pass.length; i++) {
+                    res += pass[i].charCodeAt();
+                }
+                res %= 256;
+                return res;
+            } 
+
+            function signUp() {
+                let name = prompt("name:");
+                let pass = prompt("pass");       
+                pass = hash(pass);     
+                list.registarion(new User(name, pass));
+            }
+
+            function signIn() {
+                let name = prompt("name:");
+                let pass = prompt("pass");        
+                pass = hash(pass);    
+                list.login(new User(name, pass));
+            }
+
+            class User {
+                constructor(name, pass) {
+                    this.name = name;
+                    this.pass = pass;
+                }
+            }
+
+            class UserList {
+                constructor() {
+                    this.users = [];
+                }
+
+                registarion(user) {
+                    let bool = false;
+                    if (this.users.length == 0) {
+                        this.users.push(user);
+                    } else {
+                        for (let i = 0; i < this.users.length; i++) {                 
+                            if (this.users[i].name == user.name) {
+                                    alert("Пользователь с таким именем уже зарегистрирован!");
+                            }
+                            else {
+                                bool = true;
+                            }
+                        }
+                    }
+                    if (bool) {
+                        this.users.push(user);
+                        alert("Вы успешно зарегистрированы!");
+                    }
+                }
+
+                login(user) {
+                    let count = 0;
+                    if (this.users.length == 0) {
+                        alert("Данного пользователя не найдено!");
+                    } else {
+                        for (let i = 0; i < this.users.length; i++) {                 
+                            if (this.users[i].name == user.name) {
+                                count++;
+                                if (this.users[i].pass == user.pass) {
+                                    alert("Добро пожаловать!");
+                                } else {
+                                    alert("Пароль введён неверно!");
+                                }
+                            } 
+                        }
+                        
+                        if (count == 0) {
+                            alert("Имя пользователя не найдено!");
+                        }
+                    }
+                }
+
+                getAllUsers() {
+                    for (let user of this.users) {
+                        console.log(`Name: ${user.name}\n Pass: ${user.pass}\n`);
+                    }
+                }
+            }
+ 
+            let list = new UserList();
+        </script>
+        
+    </body>
+</html>
