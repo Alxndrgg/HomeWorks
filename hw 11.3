@@ -1,27 +1,40 @@
 <html>    
     <head>
         <script charset="UTF-8"> 
-            function hash(str) {
+            function hash(str, system) {
                 let res = 0;
                 for (let i = 0; i < str.length; i++) {
                     res += str[i].charCodeAt();
                 }
-                res %= 256;
-                return res;
+                return (res % 256).toString(system);
             } 
             let str = "qwerty";
-            let res = hash(str);
-            let symbolsList = "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+            let system = 16;
+            let hash_str = hash(str, system);
+            
+            let list = "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
 
-            for (let i = 0; i < symbolsList.length; i++) {
-                let s1 = hash(symbolsList[i]);
-                for (let j = 0; j < symbolsList.length; j++) {
-                    let s2 = hash(symbolsList[j]);       
-                    if (s1 + s2 == res) {
-                        console.log(symbolsList[i] + symbolsList[j]);
+            for (let i = 0; i < list.length; i++) {
+                for(let j = 0; j < list.length; j++) {    
+                    let res = list[i] + list[j];
+                    if (hash(res, 16) == hash_str) {
+                        console.log(list[i] + list[j]);
                     }
                 }
-            } 
+            }
+            
+            
+            if (isNaN(system) || system < 0 || system == 1) {
+                alert("Вы ввели неверную систему счисления!");
+            } else if (system == 0) {
+                system = 10;
+                alert("Результат: " + hash(str, system));
+                console.log(hash(str, system));
+            } else {
+                alert("Результат: " + hash(str, system));
+                console.log(hash(str, system));
+            }
+            
 
         </script>    
     </head>
