@@ -8,28 +8,49 @@
         <button onclick="signUp()">Зарегистрироваться</button>
         <button onclick="signIn()">Войти</button>
         
-        <script> 
+        <script>
             function hash(pass) {
                 let res = 0;
                 for (let i = 0; i < pass.length; i++) {
                     res += pass[i].charCodeAt();
                 }
-                res %= 256;
-                return res;
+                return res % 256;
             } 
 
             function signUp() {
                 let name = prompt("name:");
-                let pass = prompt("pass");       
-                pass = hash(pass);     
-                list.registarion(new User(name, pass));
+                if (name != null) {
+                    if (name == "") {
+                        alert("Введите имя пользователя!");
+                    } else { 
+                        name = name.trim(); 
+                        let pass = prompt("pass");
+                        if (isNaN(pass) || pass == null) {
+                            alert("Введите корректные данные!");
+                        } else {
+                            pass = hash(pass);     
+                            list.registarion(new User(name, pass));
+                        }
+                    }
+                }
             }
 
             function signIn() {
                 let name = prompt("name:");
-                let pass = prompt("pass");        
-                pass = hash(pass);    
-                list.login(new User(name, pass));
+                if (name != null) {
+                    if (name == "") {
+                        alert("Введите имя пользователя!");
+                    } else {
+                        name = name.trim(); 
+                        let pass = prompt("pass");
+                        if (isNaN(pass) || pass == null) {
+                            alert("Введите пароль!");
+                        } else {
+                            pass = hash(pass);     
+                            list.login(new User(name, pass));
+                        }
+                    }
+                }
             }
 
             class User {
@@ -48,10 +69,13 @@
                     let bool = false;
                     if (this.users.length == 0) {
                         this.users.push(user);
+                        alert("Вы успешно зарегистрированы!");
                     } else {
                         for (let i = 0; i < this.users.length; i++) {                 
                             if (this.users[i].name == user.name) {
-                                    alert("Пользователь с таким именем уже зарегистрирован!");
+                                alert("Пользователь с таким именем уже зарегистрирован!");
+                                bool = false;
+                                break;
                             }
                             else {
                                 bool = true;
