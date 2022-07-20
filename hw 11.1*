@@ -1,0 +1,61 @@
+<html>    
+    <head>
+        <script charset="UTF-8"> 
+            function hash(pass) {
+                let res = 0;
+                for (let i = 0; i < pass.length; i++) {
+                    res += pass[i].charCodeAt();
+                }
+                return res % 256;
+            } 
+
+            let str = prompt("Введите строку для хэширования");
+            let str_hash = hash(str);
+            let k = 10;
+            let n = 10;
+            let arr = new Array(k);
+
+            for(let i = 0; i < arr.length; i++) {
+                arr[i] = 0;
+            }
+
+            while(true) {
+                let res = '';
+                let bool = false;
+                for(let i = arr.length - 1; i >= 0; i--) {
+                    res += arr[i];
+                    if (hash(res) == str_hash){
+                        console.log(res);
+                        bool = true;
+                        break;
+                    }
+                }
+
+                if (bool) {
+                    break;
+                }
+
+                let i = k - 1;
+                while (i >= 0) {
+                    if(arr[i] < n - 1){
+                        break;
+                    }
+                i--;
+                }
+                if (i < 0) {
+                    break;
+                }
+                arr[i] += 1;
+                i += 1;
+                while (i < k) {
+                    arr[i] = 0;
+                    i += 1;
+                }
+            }
+
+        </script>    
+    </head>
+    <body>
+ 
+    </body>
+</html>
