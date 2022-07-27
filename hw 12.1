@@ -1,0 +1,51 @@
+<html>    
+    <head>
+        <script charset="UTF-8"> 
+            function calculateSum(number) {
+                let sum = 0;
+                for (let i = 0; i < number; i++) {
+                    sum += i;
+                }
+                return sum;
+            }
+
+            class Array {
+                constructor() {
+                    this.n = 3;
+                    this.cache = new Map();
+                }
+
+                get(key) {
+                    let i = this.cache.get(key);
+                    if (i) {
+                        this.cache.delete(key);
+                        this.cache.set(key, i);
+                    }
+                    return i;
+                }
+
+                set(key) {
+                    let val = calculateSum(key); 
+                    if (this.cache.has(key)) {
+                        this.cache.delete(key);
+                    } else if (this.cache.size == this.n) {
+                        this.cache.delete(this.first());   
+                    } 
+                    this.cache.set(key, val);
+                }
+
+                first() {
+                    return this.cache.keys().next().value;
+                }
+            }
+
+            let cache = new Array();
+            
+            
+
+        </script>    
+    </head>
+    <body>
+ 
+    </body>
+</html>
