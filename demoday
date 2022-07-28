@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>demoday</title>
+    </head>
+    <body>
+        <script>
+        
+            function addTime (array) {
+                for (let i = 0; i < array.length; i++) {
+                        let time = Number((Math.random() * 60 + (+array[i].time)));
+                        array[i].time += time;
+                    }
+            }
+
+            function worseRacers () {
+                Russia_Racers.getWorseRaces();   //Выявляем худшего гонщика у России
+                USA_Racers.getWorseRaces();      //Выявляем худшего гонщика у Америки
+                China_Racers.getWorseRaces();    //Выявляем худшего гонщика у Китая
+                France_Racers.getWorseRaces();   //Выявляем худшего гонщика у Франции
+                Belgium_Racers.getWorseRaces();  //Выявляем худшего гонщика у Бельгии
+                Germany_Racers.getWorseRaces();  //Выявляем худшего гонщика у Германии
+            }
+
+            //Определение общей суммы мест стран, занятых на этапах
+            function stageResults (array, result) {
+                array.sort((prev, next) => prev.time - next.time);
+                let i = 1;
+                for (let racer of array) {
+                    console.log(`Место: ${i}\nСтрана: ${racer.country}\n`);
+                    if (racer.country == "Россия") {
+                        result.Russia += i;
+                    } else if (racer.country == "Америка") {
+                        result.USA += i;
+                    } else if (racer.country == "Китай") {
+                        result.China += i;
+                    } else if (racer.country == "Франция") {
+                        result.France += i;
+                    } else if (racer.country == "Бельгия") {
+                        result.Belgium += i;
+                    } else {
+                        result.Germany += i;
+                    }
+                    i++;
+                }
+                
+                let length = array.length;
+                for (let i = 0; i < length; i++) {
+                    array.pop();
+                }
+                console.log("");
+            }
+            
+
+            class Racer {
+                constructor (number, sname, name, rating, country, time) {
+                    this.number = number;    //Номер 
+                    this.sname = sname;      //Фамилия 
+                    this.name = name;        //Имя
+                    this.rating = rating;    //Рейтинг
+                    this.country = country;  //Страна
+                    this.time = time;        //Время
+                    this.top = 0;            //Место страны на этапе
+                }
+            }
+
+            class RacerList {
+                constructor () {
+                    this.racers = [];             //Список гонщиков одной страны
+                    this.racersList = racersList; //Список всех гонщиков
+                    this.stageRes = stageRes;     //Результат
+                    this.finalStage = [];         //Список участников в финальном этапе
+                    this.topCountries = {         //Результат первого круга
+                        Russia: 0,
+                        USA: 0,
+                        China: 0,
+                        France: 0,
+                        Belgium: 0,
+                        Germany: 0
+                    };
+
+                    this.topCountriesFinal = {    //Результат финального круга
+                        Russia: 0,
+                        USA: 0,
+                        China: 0,
+                        France: 0,
+                        Belgium: 0,
+                        Germany: 0
+                    };
+                }
+
+                addRacer (racer) {
+                    this.racers.push(racer);
+                    this.racersList.push(racer);
+                } 
+
+                //Прохождение этапа гонщиками
+                passingStage () {
+                    addTime(this.racersList);
+                }
+
+                //Выявление худшего гонщика страны на этапе, и добавление его в новый список 'stageRes'
+                getWorseRaces () {
+                    this.racers.sort((prev, next) => prev.time - next.time);
+                    this.stageRes.push(this.racers[3]);
+                }
+                
+                //Вывод результата первого этапа
+                getResult () {
+                    stageResults(this.stageRes, this.topCountries);
+                }
+
+                //Результат первого круга
+                firstStageRes () {
+                    let winner = [];
+                    for (let i in this.topCountries) {
+                        winner.push([i, this.topCountries[i]]);
+                    }
+                    winner.sort(function(a, b) {
+                        return a[1] - b[1];
+                    });
+
+                    alert("Результат первого круга:\n\n1 место: " + winner[0][0] + "\n2 место: " + 
+                            winner[1][0] + "\n3 место: " + winner[2][0] + "\n4 место: " + winner[3][0] + "\n5 место: " + 
+                                    winner[4][0] + "\n6 место: " + winner[5][0]);
+                }
+
+                //Отправляем лучшие страны в финальный этап
+                selectCountryFinal () {
+                    worseRacers();
+                    for (let i = 0; i < this.stageRes.length; i++) {
+                        this.stageRes[i].top = this.topCountries[Object.keys(this.topCountries)[i]];
+                    }
+                    this.stageRes.sort((prev, next) => prev.top - next.top);
+                    
+                    for (let i = 0; i < this.racersList.length; i++) {
+                        for (let j = 0; j < 4; j++) {
+                            if (this.stageRes[j].country == this.racersList[i].country) {
+                                this.finalStage.push(this.racersList[i]);
+                            }
+                        }
+                    }
+
+                    for (let racer of this.finalStage) {
+                        racer.time = 0;
+                    }
+
+                    let length = stageRes.length;
+                    for (let i = 0; i < length; i++) {
+                        stageRes.pop();
+                    }             
+                }
+
+                //Прохождение кругов в финальном этапе
+                passingStageFinal () {
+                    for (let i = 0; i < 2; i++) {
+                        addTime(this.finalStage);
+                        this.finalStage.sort((prev, next) => prev.country - next.country);
+                        for (let i = 0; i < this.finalStage.length; i += 4) {
+                            this.stageRes.push(this.finalStage[i]);
+                        }
+                        stageResults(this.stageRes, this.topCountriesFinal);
+                    }
+                } 
+
+                getWinner () {
+                    let winner = [];
+                    for (let i in this.topCountriesFinal) {
+                        winner.push([i, this.topCountriesFinal[i]]);
+                    }
+                    winner.sort(function(a, b) {
+                        return a[1] - b[1];
+                    });
+
+                    alert("Результат финала:\n\n1 место: " + winner[2][0] + "\n2 место: " + 
+                            winner[3][0] + "\n3 место: " + winner[4][0] + "\n4 место: " + winner[5][0]);
+                    console.log("Победитель: " + winner[2][0]);
+                    alert("Победитель " + winner[2][0] + "!!!");
+                }
+
+                //Вывод списка всех гонщиков
+                getAllRacers () {
+                    this.racersList.sort((prev, next) => prev.time - next.time);
+                    for (let racer of this.racersList) {
+                        console.log(`Номер: ${racer.number}\nФамилия: ${racer.sname}\nИмя: ${racer.name}\nРейтинг: ${racer.rating}\nВремя: ${racer.time}\nСтрана: ${racer.country}\n`);                     
+                    }
+                }
+            }
+
+            let racersList = []; //Список всех участников
+            let stageRes = [];   //Результат на этапе
+
+            let Russia_Racers = new RacerList();
+            Russia_Racers.addRacer(new Racer(1, "racer1", "name1", 55, "Россия", 0));
+            Russia_Racers.addRacer(new Racer(2, "racer2", "name2", 65, "Россия", 0));
+            Russia_Racers.addRacer(new Racer(3, "racer3", "name3", 43, "Россия", 0));
+            Russia_Racers.addRacer(new Racer(4, "racer4", "name4", 74, "Россия", 0));
+
+            let USA_Racers = new RacerList();
+            USA_Racers.addRacer(new Racer(5, "racer1", "name1", 66, "Америка", 0));
+            USA_Racers.addRacer(new Racer(6, "racer2", "name2", 41, "Америка", 0));
+            USA_Racers.addRacer(new Racer(7, "racer3", "name3", 87, "Америка", 0));
+            USA_Racers.addRacer(new Racer(8, "racer4", "name4", 58, "Америка", 0));
+
+            let China_Racers = new RacerList();
+            China_Racers.addRacer(new Racer(9, "racer1", "name1", 88, "Китай", 0));
+            China_Racers.addRacer(new Racer(10, "racer2", "name2", 67, "Китай", 0));
+            China_Racers.addRacer(new Racer(11, "racer3", "name3", 63, "Китай", 0));
+            China_Racers.addRacer(new Racer(12, "racer4", "name4", 71, "Китай", 0));
+            
+            let France_Racers = new RacerList();
+            France_Racers.addRacer(new Racer(13, "racer1", "name1", 70, "Франция", 0));
+            France_Racers.addRacer(new Racer(14, "racer2", "name2", 69, "Франция", 0));
+            France_Racers.addRacer(new Racer(15, "racer3", "name3", 85, "Франция", 0));
+            France_Racers.addRacer(new Racer(16, "racer4", "name4", 79, "Франция", 0)); 
+
+            let Belgium_Racers = new RacerList();
+            Belgium_Racers.addRacer(new Racer(17, "racer1", "name1", 91, "Бельгия", 0));
+            Belgium_Racers.addRacer(new Racer(18, "racer2", "name2", 86, "Бельгия", 0));
+            Belgium_Racers.addRacer(new Racer(19, "racer3", "name3", 80, "Бельгия", 0));
+            Belgium_Racers.addRacer(new Racer(20, "racer4", "name4", 89, "Бельгия", 0)); 
+            
+            let Germany_Racers = new RacerList();
+            Germany_Racers.addRacer(new Racer(21, "racer1", "name1", 77, "Германия", 0));
+            Germany_Racers.addRacer(new Racer(22, "racer2", "name2", 68, "Германия", 0));
+            Germany_Racers.addRacer(new Racer(23, "racer3", "name3", 72, "Германия", 0));
+            Germany_Racers.addRacer(new Racer(24, "racer4", "name4", 73, "Германия", 0));
+
+            let AllRacers = new RacerList();           
+            let N = Number(prompt("Введите количество этапов на первом круге"));
+            for (let i = 0; i < N; i++) {
+                AllRacers.passingStage();   //Прохождение этапов гонщиками (добавление времени)
+                worseRacers();              //Определение худших участников на этапе (среди всех стран)
+                AllRacers.getResult();      //Вывод итога первого этапа
+            }
+            AllRacers.firstStageRes();      //Вывод результата первого круга
+            console.log("=========");
+            console.log("Гонщики:");
+            AllRacers.getAllRacers();
+            console.log("=========");
+
+            let goNext = prompt("Идём во второй этап? \n(введите любое значение, чтобы продолжить)", "Да");
+                if (goNext != null) {
+                    AllRacers.selectCountryFinal(); //Выявление участников финала (4 лучшие страны)
+                    AllRacers.passingStageFinal();  //Прохождение этапов гонщиками
+                    AllRacers.getWinner();          //Определяем победителя
+                }
+            
+        </script>
+    </body>
+</html>
