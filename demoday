@@ -111,6 +111,7 @@
                     stageResults(this.stageRes, this.topCountries);
                 }
 
+
                 //Результат первого круга
                 firstStageRes () {
                     let winner = [];
@@ -141,11 +142,7 @@
                             }
                         }
                     }
-
-                    for (let racer of this.finalStage) {
-                        racer.time = 0;
-                    }
-
+                    
                     let length = stageRes.length;
                     for (let i = 0; i < length; i++) {
                         stageRes.pop();
@@ -154,9 +151,14 @@
 
                 //Прохождение кругов в финальном этапе
                 passingStageFinal () {
+                    for (let racer of this.finalStage) {
+                            racer.time = 0;
+                    }
+
                     for (let i = 0; i < 2; i++) {
                         addTime(this.finalStage);
-                        this.finalStage.sort((prev, next) => prev.country - next.country);
+                        this.finalStage.sort((prev, next) => prev.time - next.time);
+                        this.finalStage.sort((prev, next) => prev.number - next.number);
                         for (let i = 0; i < this.finalStage.length; i += 4) {
                             this.stageRes.push(this.finalStage[i]);
                         }
