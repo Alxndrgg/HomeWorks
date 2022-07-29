@@ -29,15 +29,15 @@
                 let i = 1;
                 for (let racer of array) {
                     console.log(`Место: ${i}\nСтрана: ${racer.country}\n`);
-                    if (racer.country == "Россия") {
+                    if (racer.country == "Russia") {
                         result.Russia += i;
-                    } else if (racer.country == "Америка") {
+                    } else if (racer.country == "USA") {
                         result.USA += i;
-                    } else if (racer.country == "Китай") {
+                    } else if (racer.country == "China") {
                         result.China += i;
-                    } else if (racer.country == "Франция") {
+                    } else if (racer.country == "France") {
                         result.France += i;
-                    } else if (racer.country == "Бельгия") {
+                    } else if (racer.country == "Belgium") {
                         result.Belgium += i;
                     } else {
                         result.Germany += i;
@@ -121,6 +121,9 @@
                     winner.sort(function(a, b) {
                         return a[1] - b[1];
                     });
+                    for (let i = 0; i < 6; i++) {
+                        console.log(i + 1 + " место: " + winner[i][0]);
+                    }
 
                     alert("Результат первого круга:\n\n1 место: " + winner[0][0] + "\n2 место: " + 
                             winner[1][0] + "\n3 место: " + winner[2][0] + "\n4 место: " + winner[3][0] + "\n5 место: " + 
@@ -194,40 +197,40 @@
             let stageRes = [];   //Результат на этапе
 
             let Russia_Racers = new RacerList();
-            Russia_Racers.addRacer(new Racer(1, "racer1", "name1", 55, "Россия", 0));
-            Russia_Racers.addRacer(new Racer(2, "racer2", "name2", 65, "Россия", 0));
-            Russia_Racers.addRacer(new Racer(3, "racer3", "name3", 43, "Россия", 0));
-            Russia_Racers.addRacer(new Racer(4, "racer4", "name4", 74, "Россия", 0));
+            Russia_Racers.addRacer(new Racer(1, "racer1", "name1", 55, "Russia", 0));
+            Russia_Racers.addRacer(new Racer(2, "racer2", "name2", 65, "Russia", 0));
+            Russia_Racers.addRacer(new Racer(3, "racer3", "name3", 43, "Russia", 0));
+            Russia_Racers.addRacer(new Racer(4, "racer4", "name4", 74, "Russia", 0));
 
             let USA_Racers = new RacerList();
-            USA_Racers.addRacer(new Racer(5, "racer1", "name1", 66, "Америка", 0));
-            USA_Racers.addRacer(new Racer(6, "racer2", "name2", 41, "Америка", 0));
-            USA_Racers.addRacer(new Racer(7, "racer3", "name3", 87, "Америка", 0));
-            USA_Racers.addRacer(new Racer(8, "racer4", "name4", 58, "Америка", 0));
+            USA_Racers.addRacer(new Racer(5, "racer1", "name1", 66, "USA", 0));
+            USA_Racers.addRacer(new Racer(6, "racer2", "name2", 41, "USA", 0));
+            USA_Racers.addRacer(new Racer(7, "racer3", "name3", 87, "USA", 0));
+            USA_Racers.addRacer(new Racer(8, "racer4", "name4", 58, "USA", 0));
 
             let China_Racers = new RacerList();
-            China_Racers.addRacer(new Racer(9, "racer1", "name1", 88, "Китай", 0));
-            China_Racers.addRacer(new Racer(10, "racer2", "name2", 67, "Китай", 0));
-            China_Racers.addRacer(new Racer(11, "racer3", "name3", 63, "Китай", 0));
-            China_Racers.addRacer(new Racer(12, "racer4", "name4", 71, "Китай", 0));
+            China_Racers.addRacer(new Racer(9, "racer1", "name1", 88, "China", 0));
+            China_Racers.addRacer(new Racer(10, "racer2", "name2", 67, "China", 0));
+            China_Racers.addRacer(new Racer(11, "racer3", "name3", 63, "China", 0));
+            China_Racers.addRacer(new Racer(12, "racer4", "name4", 71, "China", 0));
             
             let France_Racers = new RacerList();
-            France_Racers.addRacer(new Racer(13, "racer1", "name1", 70, "Франция", 0));
-            France_Racers.addRacer(new Racer(14, "racer2", "name2", 69, "Франция", 0));
-            France_Racers.addRacer(new Racer(15, "racer3", "name3", 85, "Франция", 0));
-            France_Racers.addRacer(new Racer(16, "racer4", "name4", 79, "Франция", 0)); 
+            France_Racers.addRacer(new Racer(13, "racer1", "name1", 70, "France", 0));
+            France_Racers.addRacer(new Racer(14, "racer2", "name2", 69, "France", 0));
+            France_Racers.addRacer(new Racer(15, "racer3", "name3", 85, "France", 0));
+            France_Racers.addRacer(new Racer(16, "racer4", "name4", 79, "France", 0)); 
 
             let Belgium_Racers = new RacerList();
-            Belgium_Racers.addRacer(new Racer(17, "racer1", "name1", 91, "Бельгия", 0));
-            Belgium_Racers.addRacer(new Racer(18, "racer2", "name2", 86, "Бельгия", 0));
-            Belgium_Racers.addRacer(new Racer(19, "racer3", "name3", 80, "Бельгия", 0));
-            Belgium_Racers.addRacer(new Racer(20, "racer4", "name4", 89, "Бельгия", 0)); 
+            Belgium_Racers.addRacer(new Racer(17, "racer1", "name1", 91, "Belgium", 0));
+            Belgium_Racers.addRacer(new Racer(18, "racer2", "name2", 86, "Belgium", 0));
+            Belgium_Racers.addRacer(new Racer(19, "racer3", "name3", 80, "Belgium", 0));
+            Belgium_Racers.addRacer(new Racer(20, "racer4", "name4", 89, "Belgium", 0)); 
             
             let Germany_Racers = new RacerList();
-            Germany_Racers.addRacer(new Racer(21, "racer1", "name1", 77, "Германия", 0));
-            Germany_Racers.addRacer(new Racer(22, "racer2", "name2", 68, "Германия", 0));
-            Germany_Racers.addRacer(new Racer(23, "racer3", "name3", 72, "Германия", 0));
-            Germany_Racers.addRacer(new Racer(24, "racer4", "name4", 73, "Германия", 0));
+            Germany_Racers.addRacer(new Racer(21, "racer1", "name1", 77, "Germany", 0));
+            Germany_Racers.addRacer(new Racer(22, "racer2", "name2", 68, "Germany", 0));
+            Germany_Racers.addRacer(new Racer(23, "racer3", "name3", 72, "Germany", 0));
+            Germany_Racers.addRacer(new Racer(24, "racer4", "name4", 73, "Germany", 0));
 
             let AllRacers = new RacerList();           
             let N = Number(prompt("Введите количество этапов на первом круге"));
